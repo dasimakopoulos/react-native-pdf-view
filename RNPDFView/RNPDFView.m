@@ -64,7 +64,7 @@
     CFDataRef myPDFData = (__bridge CFDataRef)rawPDF;
     CGDataProviderRef provider = CGDataProviderCreateWithCFData(myPDFData);
     _pdf = CGPDFDocumentCreateWithProvider(provider);
-    CFRelease((__bridge CFTypeRef)rawPDF);
+    // CFRelease((__bridge CFTypeRef)rawPDF);
   } else {
     NSLog(@"null path & rawData");
     return;
