@@ -5,6 +5,7 @@ import java.io.File;
 import android.content.Context;
 import android.view.ViewGroup;
 import android.util.Log;
+import android.util.Base64;
 import android.graphics.PointF;
 
 import com.github.barteksc.pdfviewer.PDFView;
@@ -28,6 +29,7 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.facebook.react.common.MapBuilder;
 
+
 import static java.lang.String.format;
 import java.lang.ClassCastException;
 
@@ -38,6 +40,7 @@ public class PDFViewManager extends SimpleViewManager<PDFView> implements OnPage
     Integer pageNumber = 0;
     String assetName;
     String filePath;
+    byte[] rawPDFData;
 
 
     public PDFViewManager(ReactApplicationContext reactContext){
@@ -109,12 +112,29 @@ public class PDFViewManager extends SimpleViewManager<PDFView> implements OnPage
                 .onPageChange(this)
                 .onLoad(this)
                 .load();
+        } else if (rawPDFData != null) {
+            pdfView.fromBytes(rawPDFData)
+                .defaultPage(pageNumber)
+                //.showMinimap(false)
+                //.enableSwipe(true)
+                //.swipeVertical(true)
+                .onPageChange(this)
+                .onLoad(this)
+                .load();
         }
     }
 
     @ReactProp(name = "asset")
     public void setAsset(PDFView view, String ast) {
         assetName = ast;
+        display(false);
+    }
+
+    @ReactProp(name = "rawData")
+    public void setRawData(PDFView view, String rawData) {
+        assetName = null;
+        filePath = null;
+        rawPDFData = Base64.decode(rawData, Base64.DEFAULT);
         display(false);
     }
 

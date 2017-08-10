@@ -53,28 +53,37 @@
 
 - (void)reloadPdf
 {
-  if (self.path == (id)[NSNull null] || self.path.length == 0) {
-    NSLog(@"null path");
-  } else {
-    NSLog(@"not null: %@", self.path);
+  if (self.path != (id)[NSNull null] && self.path.length >= 0) {
+    NSLog(@"not null (path): %@", self.path);
   
     NSURL *pdfURL = [NSURL fileURLWithPath:self.path];
     _pdf = CGPDFDocumentCreateWithURL( (__bridge CFURLRef) pdfURL );
-    _numberOfPages = (int)CGPDFDocumentGetNumberOfPages( _pdf );
-
-    if (self.pageNumber != nil && [self.pageNumber intValue] <= _numberOfPages) {
-      _page = CGPDFDocumentGetPage( _pdf, [self.pageNumber unsignedIntValue] );
-    } else {
-      _page = CGPDFDocumentGetPage( _pdf, 1 );
-    }
-    
-    NSLog(@"self.page==NULL? %@",_page==NULL?@"yes":@"no");
-    
-    _pdfScrollView = [[PDFScrollView alloc] initWithFrame:self.bounds];
-    _pdfScrollView.PDFScale = 1;
-    [_pdfScrollView setPDFPage:_page];
-    [self addSubview:_pdfScrollView];
+  } else if (self.rawData != (id)[NSNull null] && self.rawData.length >= 0) {
+    NSLog(@"not null (data): %d", self.rawData.length);
+    NSData *rawPDF = [NSData dataFromBase64String:self.rawData];
+    CFDataRef myPDFData = (CFDataRef)rawPDF;
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData(myPDFData);
+    _pdf = CGPDFDocumentCreateWithProvider(provider);
+    CFRelease(rawPDF);
+  } else {
+    NSLog(@"null path & rawData");
+    return;
   }
+
+  _numberOfPages = (int)CGPDFDocumentGetNumberOfPages( _pdf );
+
+  if (self.pageNumber != nil && [self.pageNumber intValue] <= _numberOfPages) {
+    _page = CGPDFDocumentGetPage( _pdf, [self.pageNumber unsignedIntValue] );
+  } else {
+    _page = CGPDFDocumentGetPage( _pdf, 1 );
+  }
+  
+  NSLog(@"self.page==NULL? %@",_page==NULL?@"yes":@"no");
+  
+  _pdfScrollView = [[PDFScrollView alloc] initWithFrame:self.bounds];
+  _pdfScrollView.PDFScale = 1;
+  [_pdfScrollView setPDFPage:_page];
+  [self addSubview:_pdfScrollView];
 }
 
 - (void)setPageNumber:(NSNumber *)pageNumber
