@@ -53,18 +53,18 @@
 
 - (void)reloadPdf
 {
-  if (self.path != (id)[NSNull null] && self.path.length >= 0) {
+  if (self.path != (id)[NSNull null] && self.path.length > 0) {
     NSLog(@"not null (path): %@", self.path);
   
     NSURL *pdfURL = [NSURL fileURLWithPath:self.path];
-    _pdf = CGPDFDocumentCreateWithURL( (__bridge CFURLRef) pdfURL );
-  } else if (self.rawData != (id)[NSNull null] && self.rawData.length >= 0) {
-    NSLog(@"not null (data): %d", self.rawData.length);
-    NSData *rawPDF = [NSData dataFromBase64String:self.rawData];
-    CFDataRef myPDFData = (CFDataRef)rawPDF;
+    pdf = CGPDFDocumentCreateWithURL( (_bridge CFURLRef) pdfURL );
+  } else if (self.rawData != (id)[NSNull null] && self.rawData.length > 0) {
+    NSLog(@"not null (data): %lu", self.rawData.length);
+    NSData *rawPDF = [[NSData alloc] initWithBase64EncodedString:self.rawData options:0];
+    CFDataRef myPDFData = (__bridge CFDataRef)rawPDF;
     CGDataProviderRef provider = CGDataProviderCreateWithCFData(myPDFData);
     _pdf = CGPDFDocumentCreateWithProvider(provider);
-    CFRelease(rawPDF);
+    CFRelease((__bridge CFTypeRef)rawPDF);
   } else {
     NSLog(@"null path & rawData");
     return;
