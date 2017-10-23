@@ -5,6 +5,7 @@ import java.io.File;
 import android.content.Context;
 import android.view.ViewGroup;
 import android.util.Log;
+import android.util.Base64;
 import android.graphics.PointF;
 
 import com.github.barteksc.pdfviewer.PDFView;
@@ -28,6 +29,7 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.facebook.react.common.MapBuilder;
 
+
 import static java.lang.String.format;
 import java.lang.ClassCastException;
 
@@ -38,6 +40,7 @@ public class PDFViewManager extends SimpleViewManager<PDFView> implements OnPage
     Integer pageNumber = 0;
     String assetName;
     String filePath;
+    byte[] rawPDFData;
 
 
     public PDFViewManager(ReactApplicationContext reactContext){
@@ -64,8 +67,8 @@ public class PDFViewManager extends SimpleViewManager<PDFView> implements OnPage
             showLog("does not has a parent");
           }
         }
-        return pdfView;
-        //return new PDFView(context, null);
+        // return pdfView;
+        return new PDFView(context, null);
     }
 
     @Override
@@ -86,7 +89,9 @@ public class PDFViewManager extends SimpleViewManager<PDFView> implements OnPage
          );
     }
 
-    private void display(boolean jumpToFirstPage) {
+    private void display(PDFView pdfView, boolean jumpToFirstPage) {
+        this.pdfView = pdfView;
+
         if (jumpToFirstPage)
             pageNumber = 1;
         showLog(format("display %s %s", filePath, pageNumber));
@@ -109,13 +114,32 @@ public class PDFViewManager extends SimpleViewManager<PDFView> implements OnPage
                 .onPageChange(this)
                 .onLoad(this)
                 .load();
+        } else if (rawPDFData != null) {
+            pdfView.fromBytes(rawPDFData)
+                .defaultPage(pageNumber)
+                //.showMinimap(false)
+                //.enableSwipe(true)
+                //.swipeVertical(true)
+                .enableSwipe(true)
+                .swipeHorizontal(false)
+                .onPageChange(this)
+                .onLoad(this)
+                .load();
         }
     }
 
     @ReactProp(name = "asset")
     public void setAsset(PDFView view, String ast) {
         assetName = ast;
-        display(false);
+        display(view, false);
+    }
+
+    @ReactProp(name = "rawData")
+    public void setRawData(PDFView view, String rawData) {
+        assetName = null;
+        filePath = null;
+        rawPDFData = rawData == null ? null : Base64.decode(rawData, Base64.DEFAULT);
+        display(view, false);
     }
 
     @ReactProp(name = "pageNumber")
@@ -123,21 +147,21 @@ public class PDFViewManager extends SimpleViewManager<PDFView> implements OnPage
         //view.setPageNumber(pageNum);
         if (pageNum >= 0){
             pageNumber = pageNum;
-            display(false);
+            display(view, false);
         }
     }
 
     @ReactProp(name = "path")
     public void setPath(PDFView view, String pth) {
         filePath = pth;
-        display(false);
+        display(view, false);
     }
 
     @ReactProp(name = "src")
     public void setSrc(PDFView view, String src) {
         //view.setSource(src);
         filePath = src;
-        display(false);
+        display(view, false);
     }
 
     @ReactProp(name = "zoom")
