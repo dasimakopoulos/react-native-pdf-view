@@ -1,13 +1,70 @@
 {
-  "name": "react-native-pdf-view",
-  "version": "0.4.0",
-  "description": "A pdf file view component for react native.",
-  "main": "index.js",
-  "typings": "./index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cnjon/react-native-pdf-view.git"
+  "_args": [
+    [
+      {
+        "raw": "react-native-pdf-view@git+https://git@github.com/mataron/react-native-pdf-view.git",
+        "scope": null,
+        "escapedName": "react-native-pdf-view",
+        "name": "react-native-pdf-view",
+        "rawSpec": "git+https://git@github.com/mataron/react-native-pdf-view.git",
+        "spec": "git+https://git@github.com/mataron/react-native-pdf-view.git",
+        "type": "hosted",
+        "hosted": {
+          "type": "github",
+          "ssh": "git@github.com:mataron/react-native-pdf-view.git",
+          "sshUrl": "git+ssh://git@github.com/mataron/react-native-pdf-view.git",
+          "httpsUrl": "git+https://git@github.com/mataron/react-native-pdf-view.git",
+          "gitUrl": "git://git@github.com/mataron/react-native-pdf-view.git",
+          "shortcut": "github:mataron/react-native-pdf-view",
+          "directUrl": "https://git@raw.githubusercontent.com/mataron/react-native-pdf-view/master/package.json"
+        }
+      },
+      "/Users/Home/Projects/mynet-mobile/mynet"
+    ]
+  ],
+  "_from": "git+https://git@github.com/mataron/react-native-pdf-view.git",
+  "_id": "react-native-pdf-view@0.4.0",
+  "_inCache": true,
+  "_location": "/react-native-pdf-view",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-native-pdf-view@git+https://git@github.com/mataron/react-native-pdf-view.git",
+    "scope": null,
+    "escapedName": "react-native-pdf-view",
+    "name": "react-native-pdf-view",
+    "rawSpec": "git+https://git@github.com/mataron/react-native-pdf-view.git",
+    "spec": "git+https://git@github.com/mataron/react-native-pdf-view.git",
+    "type": "hosted",
+    "hosted": {
+      "type": "github",
+      "ssh": "git@github.com:mataron/react-native-pdf-view.git",
+      "sshUrl": "git+ssh://git@github.com/mataron/react-native-pdf-view.git",
+      "httpsUrl": "git+https://git@github.com/mataron/react-native-pdf-view.git",
+      "gitUrl": "git://git@github.com/mataron/react-native-pdf-view.git",
+      "shortcut": "github:mataron/react-native-pdf-view",
+      "directUrl": "https://git@raw.githubusercontent.com/mataron/react-native-pdf-view/master/package.json"
+    }
   },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git+https://git@github.com/mataron/react-native-pdf-view.git#0b786d78617005890c8f1b1c7fb43fdd7d8230f7",
+  "_shasum": "ad69492bd132a89d9a68fbea1e125d5259436a0e",
+  "_shrinkwrap": null,
+  "_spec": "react-native-pdf-view@git+https://git@github.com/mataron/react-native-pdf-view.git",
+  "_where": "/Users/Home/Projects/mynet-mobile/mynet",
+  "author": {
+    "name": "cnjon",
+    "url": "https://github.com/cnjon"
+  },
+  "bugs": {
+    "url": "https://github.com/cnjon/react-native-pdf-view/issues"
+  },
+  "dependencies": {},
+  "description": "A pdf file view component for react native.",
+  "devDependencies": {},
+  "gitHead": "0b786d78617005890c8f1b1c7fb43fdd7d8230f7",
+  "homepage": "https://github.com/cnjon/react-native-pdf-view#readme",
   "keywords": [
     "react-component",
     "react-native",
@@ -16,16 +73,20 @@
     "pdf",
     "view"
   ],
-  "author": {
-    "name": "cnjon",
-    "url": "https://github.com/cnjon"
-  },
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cnjon/react-native-pdf-view/issues"
-  },
+  "main": "index.js",
+  "name": "react-native-pdf-view",
+  "optionalDependencies": {},
   "peerDependencies": {
     "@types/react": "*",
     "@types/react-native": "*"
-  }
+  },
+  "readme": "# react-native-pdf-view\nReact Native PDF View (cross-platform support)\n\n### Breaking changes\n\n* React native 0.40 moved iOS headers, thus all iOS react import statements has been changed. Use version 0.4.* for react native >=0.40. For earlier version see below breaking change.\n\n* React native 0.19 changed the ReactProps class which led to problems with updating native view properties (see https://github.com/facebook/react-native/issues/5649). These errors are corrected in react-native-pdf-view version 0.2.0. Use version 0.2.* for react native >=0.19 and for earlier react native versions use version 0.1.3.\n\n### Installation\n```bash\nnpm i react-native-pdf-view --save\n\nreact-native link react-native-pdf-view\n```\n* In `android/setting.gradle`\n\n```gradle\n...\ninclude ':PDFView'\nproject(':PDFView').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-pdf-view/android')\n```\n\n* In `android/app/build.gradle`\n\n```gradle\n...\ndependencies {\n    ...\n    compile project(':PDFView')\n}\n```\n\n* register module (in MainActivity.java)\n\nOn newer versions of React Native (0.18+):\n```java\nimport com.keyee.pdfview.PDFView;  // <--- import\n\npublic class MainActivity extends ReactActivity {\n  ......\n    @Override\n    protected List<ReactPackage> getPackages() {\n      return Arrays.<ReactPackage>asList(\n        new PDFView(), // <------ add here\n        new MainReactPackage());\n    }\n}\n```\n\nOn older versions of React Native:\n```java\nimport com.keyee.pdfview.PDFView;  // <--- import\n\npublic class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {\n  ......\n\n  @Override\n  protected void onCreate(Bundle savedInstanceState) {\n    super.onCreate(savedInstanceState);\n    mReactRootView = new ReactRootView(this);\n\n    mReactInstanceManager = ReactInstanceManager.builder()\n      .setApplication(getApplication())\n      .setBundleAssetName(\"index.android.bundle\")\n      .setJSMainModuleName(\"index.android\")\n      .addPackage(new MainReactPackage())\n      .addPackage(new PDFView())              // <------ add here\n      .setUseDeveloperSupport(BuildConfig.DEBUG)\n      .setInitialLifecycleState(LifecycleState.RESUMED)\n      .build();\n\n    mReactRootView.startReactApplication(mReactInstanceManager, \"ExampleRN\", null);\n\n    setContentView(mReactRootView);\n  }\n\n  ......\n\n}\n```\n\n### Usage\n\nFirst, require it from your app's JavaScript files with:\n```bash\nimport PDFView from 'react-native-pdf-view';\n```\n\n\n### Example\n\n```js\n'use strict';\n\nimport React,{\n    Component\n} from 'react';\n\nimport {\n    StyleSheet,\n    View\n} from 'react-native';\n\nimport PDFView from 'react-native-pdf-view';\n\nexport default class PDF extends Component {\n    constructor(props) {\n        super(props);\n    }\n\n    render(){\n      <PDFView ref={(pdf)=>{this.pdfView = pdf;}}\n                         src={\"sdcard/pdffile.pdf\"}\n                         onLoadComplete = {(pageCount)=>{\n                            this.pdfView.setNativeProps({\n                                zoom: 1.5\n                            });\n                         }}\n                         style={styles.pdf}/>\n    }\n}\nvar styles = StyleSheet.create({\n    pdf: {\n        flex:1\n    }\n});\n```\n\n\n### Configuration\n\n| Property      | Type        \t| Default \t\t \t\t\t\t| Description | iOS | Android |\n| ------------- |:-------------:|:------------:\t\t\t\t| ----------- | --- | ------- |\n| path        | string \t\t\t| null \t\t\t \t\t\t\t| pdf absolute path| ✔   | ✔ |\n| src        | string \t\t\t| null \t\t\t \t\t\t\t| pdf absolute path(`Deprecated`) | ✔   | ✔ |\n| asset        | string \t\t\t| null \t\t\t \t\t\t\t| the name of a PDF file in the asset folder |   | ✔ |\n| pageNumber    \t\t  | number  \t    |\t1 \t\t \t\t\t\t| page index | ✔   | ✔ |\n| zoom \t\t  | number  \t    |\t1.0 \t| zoom scale | ✔   | ✔ |\n| onLoadComplete \t\t\t| function     \t  | null\t \t\t\t| page load complete,return page count | ✔   | ✔ |\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cnjon/react-native-pdf-view.git"
+  },
+  "typings": "./index.d.ts",
+  "version": "0.4.0"
 }
