@@ -60,7 +60,9 @@
   "bugs": {
     "url": "https://github.com/cnjon/react-native-pdf-view/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "prop-types": "15.5.10"
+  },
   "description": "A pdf file view component for react native.",
   "devDependencies": {},
   "gitHead": "0b786d78617005890c8f1b1c7fb43fdd7d8230f7",
