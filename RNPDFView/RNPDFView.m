@@ -57,7 +57,7 @@
     NSLog(@"not null (path): %@", self.path);
   
     NSURL *pdfURL = [NSURL fileURLWithPath:self.path];
-    _pdf = CGPDFDocumentCreateWithURL( (__bridge CFURLRef) pdfURL );
+    pdf = CGPDFDocumentCreateWithURL( (_bridge CFURLRef) pdfURL );
   } else if (self.rawData != (id)[NSNull null] && self.rawData.length > 0) {
     NSLog(@"not null (data): %lu", self.rawData.length);
     NSData *rawPDF = [[NSData alloc] initWithBase64EncodedString:self.rawData options:0];
